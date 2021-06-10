@@ -1,5 +1,6 @@
-import type { commentNode, NodeType } from './types'
+import type { NodeType, Node } from './types'
 import { reg } from './reg';
+import { TextParser } from './text-parser';
 
 import { isCloseSelf } from './utils';
 
@@ -28,28 +29,39 @@ export class HtmlParser {
                     })
                     source = this._advance(source, index);
                 }
-            } else if(source.indexOf(reg.tagEnd) === 0) {
+            }
+            // end tag.
+            else if(source.indexOf(reg.tagEnd) === 0) {
                 const match = source.match(reg.tagEndReg);
                 if(match) {
                     this.endTagHandler(match);
                     source = this._advance(source, match[0].length);
                 }
-            } else if(source.indexOf(reg.tagStart) === 0) {
+            }
+            // start tag.
+            else if(source.indexOf(reg.tagStart) === 0) {
                 const match = source.match(reg.tagStartReg);
                 if(match) {
                     this.startTagHandler(match);
                     source = this._advance(source, match[0].length);
                 }
             }
+            // text.
+            else {
+                const index = this.findTagIndex(source);
+                const text = source.slice(0, index);
+                this.textHandler(text);
+                source = this._advance(source, index);
+            }
         }
-        return this.parentNode;
+        return this.ast;
     }
 
     private _advance(source, step) {
         return source.slice(step);
     }
 
-    private commentHandler(node: commentNode) {
+    private commentHandler(node: Node) {
         this.parentNode.children.push(node)
     }
 
@@ -75,7 +87,7 @@ export class HtmlParser {
         }
     }
 
-    endTagHandler(match) {
+    private endTagHandler(match) {
         const tag = match[1];
         if(this.parentNode.tag !== tag) {
             throw "error";
@@ -84,5 +96,20 @@ export class HtmlParser {
             this.parentNode = this.parentNode.parent;
             this.parentNode.children.push(node);
         }
+    }
+
+    private findTagIndex(source) {
+        let index = 0;
+        while(index < source.length && source.charAt(index) !== '<') {
+            index++;
+        }
+        return index;
+    }
+
+    private textHandler(text: string) {
+        const instance = new TextParser(text);
+        const _arr = instance.init();
+        this.parentNode.children.push(..._arr);
+
     }
 }

@@ -1,17 +1,17 @@
 
-interface commentNode {
-    type: 'Comment';
+interface Node {
+    type: 'Comment' | 'Text';
     content: string;
 }
 
 interface NodeType {
     type: string;
     tag?: string;
-    children: Array<NodeType | commentNode>;
+    children: Array<Node | NodeType>;
     parent: NodeType
 }
 
 export type {
-    commentNode,
+    Node,
     NodeType
 }
