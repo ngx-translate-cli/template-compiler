@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "ES5",
+        "moduleResolution": "Node",
+        "outDir": "./dist",
+        "declaration": true
+    }
+}
