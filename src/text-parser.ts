@@ -15,7 +15,7 @@ class TextParser {
                     throw "parse error " + this.text;
                 } else {
                     const node = {
-                        type: 'context',
+                        type: 'Context',
                         name: this.text.slice(0, _lastIndex)
                     }
                     textTree.push(node);
@@ -25,14 +25,14 @@ class TextParser {
                 const findLeft = this.text.indexOf('{{');
                 if(findLeft > -1) {
                     const node = {
-                        type: 'common',
+                        type: 'Text',
                         content: this.text.slice(0, findLeft)
                     }
                     textTree.push(node);
                     this.text = this.text.slice(findLeft);
                 } else {
                     const node = {
-                        type: 'common',
+                        type: 'Text',
                         content: this.text
                     }
                     textTree.push(node);

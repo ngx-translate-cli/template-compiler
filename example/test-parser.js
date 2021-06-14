@@ -1,4 +1,16 @@
-const { HtmlParser } = require('../dist/index');
+const { HtmlParser, traverser, Generator } = require('../dist/index');
+const { writeFile } = require('fs');
+const { resolve } = require('path');
 
 
-new HtmlParser().parse('<div class="test" id="o_1"><p>12312{{a}}31233</p></div>')
+const ast = new HtmlParser(`<p>测试文件{{ab}}</p>`).parse();
+
+traverser(ast[0], {
+    Text(node) {
+        node.content = `{{'a.v' | translate}}`;
+    }
+})
+
+writeFile(resolve(__dirname, './test.html'), Generator(ast), (err) => {
+    console.log('parser successfully!');
+});

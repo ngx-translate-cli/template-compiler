@@ -2,8 +2,8 @@ export const reg =  {
     commentStart: '<!--',
     commentEnd: '-->',
     tagStart: '<',
-    tagStartReg: /^<([-A-Za-z0-9_]+)((?:\s+\w+="\w+")*)\s*\/?>/,
+    tagStartReg: /^<([-A-Za-z0-9_]+)([^>\/]*)\/?>/,
     tagEnd: '</',
-    tagEndReg:  /^<\/([-A-Za-z0-9_]+)[^>]*>/
+    tagEndReg:  /^<\/\s*([-A-Za-z0-9_]+)[^>]*>/
 }
  
