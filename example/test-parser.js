@@ -3,15 +3,33 @@ const { writeFile } = require('fs');
 const { resolve } = require('path');
 
 
-const ast = new HtmlParser(`<nz-badge
-class="right15 btn-badge"
-(click)="onClick(item)" title="测试"
-*ngFor="let item of btnList"
->
-<button class="btn-wrap" [class.btn-selected]="item.selected">
-    {{ transforTitle(item) }}我在
-</button>
-</nz-badge>`).parse();
+const ast = new HtmlParser(`<section class="btn-auto-list-wrap">
+<div class="btn-list" [class.btn-hide]="!isExpand">
+    <nz-badge
+        class="right15 btn-badge"
+        (click)="onClick(item)"
+        *ngFor="let item of btnList"
+    >
+        <button class="btn-wrap" [class.btn-selected]="item.selected">
+            {{ transforTitle(item) }}
+        </button>
+    </nz-badge>
+</div>
+<div class="btn-icon" (click)="isExpandChange.emit(!isExpand)">
+    <i
+        nz-icon
+        iconfont="iconHS-zhankai"
+        *ngIf="!isExpand; else elseTemplate"
+    >
+    </i>
+    <ng-template #elseTemplate>
+        <i nz-icon iconfont="iconHS-zhankai-copy"></i>
+    </ng-template>
+
+    {{ isExpand ? "收起" : "展开" }}
+</div>
+</section>
+`).parse();
 
 traverser(ast, {
     Text(node) {

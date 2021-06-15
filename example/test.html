@@ -1,4 +1,18 @@
-<nz-badge class="right15 btn-badge" (click)="onClick(item)" [title]="'zh.json' | translate" *ngFor="let item of btnList" >
-<button class="btn-wrap" [class.btn-selected]="item.selected" >
-    {{ transforTitle(item) }}{{'a.v' | translate}}</button>
-</nz-badge>
+<section class="btn-auto-list-wrap" >
+<div class="btn-list" [class.btn-hide]="!isExpand" >
+    <nz-badge class="right15 btn-badge" (click)="onClick(item)" *ngFor="let item of btnList" >
+        <button class="btn-wrap" [class.btn-selected]="item.selected" >
+            {{ transforTitle(item) }}
+        </button>
+    </nz-badge>
+</div>
+<div class="btn-icon" (click)="isExpandChange.emit(!isExpand)" >
+    <i nz-icon="undefined" iconfont="iconHS-zhankai" *ngIf="!isExpand; else elseTemplate" >
+    </i>
+    <ng-template elseTemplate="undefined" >
+        <i nz-icon="undefined" iconfont="iconHS-zhankai-copy" ></i>
+    </ng-template>
+
+    {{ isExpand ? "收起" : "展开" }}
+</div>
+</section>

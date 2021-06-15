@@ -5,27 +5,12 @@
 		"children": [
 			{
 				"type": "Element",
-				"tag": "nz-badge",
+				"tag": "section",
 				"attrs": [
 					{
 						"name": "class",
 						"type": "CommonAttr",
-						"value": "right15 btn-badge"
-					},
-					{
-						"name": "(click)",
-						"type": "ActiveAttr",
-						"value": "onClick(item)"
-					},
-					{
-						"name": "[title]",
-						"type": "CommonAttr",
-						"value": "'zh.json' | translate"
-					},
-					{
-						"name": "*ngFor",
-						"type": "CommonAttr",
-						"value": "let item of btnList"
+						"value": "btn-auto-list-wrap"
 					}
 				],
 				"children": [
@@ -35,17 +20,17 @@
 					},
 					{
 						"type": "Element",
-						"tag": "button",
+						"tag": "div",
 						"attrs": [
 							{
 								"name": "class",
 								"type": "CommonAttr",
-								"value": "btn-wrap"
+								"value": "btn-list"
 							},
 							{
-								"name": "[class.btn-selected]",
+								"name": "[class.btn-hide]",
 								"type": "DynamicAttr",
-								"value": "item.selected"
+								"value": "!isExpand"
 							}
 						],
 						"children": [
@@ -54,12 +39,173 @@
 								"content": "\n    "
 							},
 							{
-								"type": "Context",
-								"name": " transforTitle(item) "
+								"type": "Element",
+								"tag": "nz-badge",
+								"attrs": [
+									{
+										"name": "class",
+										"type": "CommonAttr",
+										"value": "right15 btn-badge"
+									},
+									{
+										"name": "(click)",
+										"type": "ActiveAttr",
+										"value": "onClick(item)"
+									},
+									{
+										"name": "*ngFor",
+										"type": "CommonAttr",
+										"value": "let item of btnList"
+									}
+								],
+								"children": [
+									{
+										"type": "Text",
+										"content": "\n        "
+									},
+									{
+										"type": "Element",
+										"tag": "button",
+										"attrs": [
+											{
+												"name": "class",
+												"type": "CommonAttr",
+												"value": "btn-wrap"
+											},
+											{
+												"name": "[class.btn-selected]",
+												"type": "DynamicAttr",
+												"value": "item.selected"
+											}
+										],
+										"children": [
+											{
+												"type": "Text",
+												"content": "\n            "
+											},
+											{
+												"type": "Context",
+												"name": " transforTitle(item) "
+											},
+											{
+												"type": "Text",
+												"content": "\n        "
+											}
+										]
+									},
+									{
+										"type": "Text",
+										"content": "\n    "
+									}
+								]
 							},
 							{
 								"type": "Text",
-								"content": "{{'a.v' | translate}}"
+								"content": "\n"
+							}
+						]
+					},
+					{
+						"type": "Text",
+						"content": "\n"
+					},
+					{
+						"type": "Element",
+						"tag": "div",
+						"attrs": [
+							{
+								"name": "class",
+								"type": "CommonAttr",
+								"value": "btn-icon"
+							},
+							{
+								"name": "(click)",
+								"type": "ActiveAttr",
+								"value": "isExpandChange.emit(!isExpand)"
+							}
+						],
+						"children": [
+							{
+								"type": "Text",
+								"content": "\n    "
+							},
+							{
+								"type": "Element",
+								"tag": "i",
+								"attrs": [
+									{
+										"name": "nz-icon",
+										"type": "CommonAttr"
+									},
+									{
+										"name": "iconfont",
+										"type": "CommonAttr",
+										"value": "iconHS-zhankai"
+									},
+									{
+										"name": "*ngIf",
+										"type": "CommonAttr",
+										"value": "!isExpand; else elseTemplate"
+									}
+								],
+								"children": [
+									{
+										"type": "Text",
+										"content": "\n    "
+									}
+								]
+							},
+							{
+								"type": "Text",
+								"content": "\n    "
+							},
+							{
+								"type": "Element",
+								"tag": "ng-template",
+								"attrs": [
+									{
+										"name": "elseTemplate",
+										"type": "CommonAttr"
+									}
+								],
+								"children": [
+									{
+										"type": "Text",
+										"content": "\n        "
+									},
+									{
+										"type": "Element",
+										"tag": "i",
+										"attrs": [
+											{
+												"name": "nz-icon",
+												"type": "CommonAttr"
+											},
+											{
+												"name": "iconfont",
+												"type": "CommonAttr",
+												"value": "iconHS-zhankai-copy"
+											}
+										],
+										"children": []
+									},
+									{
+										"type": "Text",
+										"content": "\n    "
+									}
+								]
+							},
+							{
+								"type": "Text",
+								"content": "\n\n    "
+							},
+							{
+								"type": "Context",
+								"name": " isExpand ? \"收起\" : \"展开\" "
+							},
+							{
+								"type": "Text",
+								"content": "\n"
 							}
 						]
 					},
