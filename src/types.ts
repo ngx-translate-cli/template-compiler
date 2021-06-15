@@ -16,8 +16,15 @@ interface sourceState {
     tpl: string;
 }
 
+interface attrNode {
+    name: string;
+    value: string;
+    type: 'CommonAttr' | 'ActiveAttr' | 'DynamicAttr'
+}
+
 export type {
     Node,
     NodeType,
-    sourceState
+    sourceState,
+    attrNode
 }

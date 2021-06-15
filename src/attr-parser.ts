@@ -1,5 +1,5 @@
 import * as sym from './symbols';
-
+import type { attrNode } from './types';
 
 export function attrParser(attr) {
     const reg = sym.commonAttr;
@@ -11,28 +11,19 @@ export function attrParser(attr) {
         if(!key) {
             throw new Error('parser attribute error at' + attr);
         }
-        let node = null;
+        const node = {
+            value,
+            name: key
+        } as attrNode;
         if(sym.dyAttr.test(key)) {
             if(!value) {
                 throw new Error('dynamic attribute need a value.');
             }
-            node = {
-                name: key,
-                type: 'DynamicAttr',
-                value
-            }
+            node.type = 'DynamicAttr';
         } else if(sym.activeAttr.test(key)) {
-            node = {
-                name: key,
-                type: 'ActiveAttr',
-                value
-            }
+            node.type = 'ActiveAttr';
         } else {
-            node = {
-                name: key,
-                type: 'CommonAttr',
-                value
-            }
+            node.type = 'CommonAttr';
         }
         output.push(node);
     }

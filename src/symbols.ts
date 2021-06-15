@@ -7,7 +7,7 @@ export const tagEnd = '</';
 export const tagEndReg =  /^<\/\s*([-A-Za-z0-9_]+)[^>]*>/;
 
 // attr
-export const commonAttr = /\s*([\w-*.\[\]()]+)\s*(?:=\s*"([\s\S]+?)")?/g
+export const commonAttr = /\s*([\w-*.\[\]()#]+)\s*(?:=\s*"([\s\S]+?)")?/g
 
 export const dyAttr = /\[[\w-*.]+\]/;
 

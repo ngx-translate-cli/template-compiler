@@ -8,9 +8,9 @@
 				"tag": "section",
 				"attrs": [
 					{
+						"value": "btn-auto-list-wrap",
 						"name": "class",
-						"type": "CommonAttr",
-						"value": "btn-auto-list-wrap"
+						"type": "CommonAttr"
 					}
 				],
 				"children": [
@@ -23,14 +23,14 @@
 						"tag": "div",
 						"attrs": [
 							{
+								"value": "btn-list",
 								"name": "class",
-								"type": "CommonAttr",
-								"value": "btn-list"
+								"type": "CommonAttr"
 							},
 							{
+								"value": "!isExpand",
 								"name": "[class.btn-hide]",
-								"type": "DynamicAttr",
-								"value": "!isExpand"
+								"type": "DynamicAttr"
 							}
 						],
 						"children": [
@@ -43,19 +43,19 @@
 								"tag": "nz-badge",
 								"attrs": [
 									{
+										"value": "right15 btn-badge",
 										"name": "class",
-										"type": "CommonAttr",
-										"value": "right15 btn-badge"
+										"type": "CommonAttr"
 									},
 									{
+										"value": "onClick(item)",
 										"name": "(click)",
-										"type": "ActiveAttr",
-										"value": "onClick(item)"
+										"type": "ActiveAttr"
 									},
 									{
+										"value": "let item of btnList",
 										"name": "*ngFor",
-										"type": "CommonAttr",
-										"value": "let item of btnList"
+										"type": "CommonAttr"
 									}
 								],
 								"children": [
@@ -68,14 +68,14 @@
 										"tag": "button",
 										"attrs": [
 											{
+												"value": "btn-wrap",
 												"name": "class",
-												"type": "CommonAttr",
-												"value": "btn-wrap"
+												"type": "CommonAttr"
 											},
 											{
+												"value": "item.selected",
 												"name": "[class.btn-selected]",
-												"type": "DynamicAttr",
-												"value": "item.selected"
+												"type": "DynamicAttr"
 											}
 										],
 										"children": [
@@ -114,14 +114,14 @@
 						"tag": "div",
 						"attrs": [
 							{
+								"value": "btn-icon",
 								"name": "class",
-								"type": "CommonAttr",
-								"value": "btn-icon"
+								"type": "CommonAttr"
 							},
 							{
+								"value": "isExpandChange.emit(!isExpand)",
 								"name": "(click)",
-								"type": "ActiveAttr",
-								"value": "isExpandChange.emit(!isExpand)"
+								"type": "ActiveAttr"
 							}
 						],
 						"children": [
@@ -138,14 +138,14 @@
 										"type": "CommonAttr"
 									},
 									{
+										"value": "iconHS-zhankai",
 										"name": "iconfont",
-										"type": "CommonAttr",
-										"value": "iconHS-zhankai"
+										"type": "CommonAttr"
 									},
 									{
+										"value": "!isExpand; else elseTemplate",
 										"name": "*ngIf",
-										"type": "CommonAttr",
-										"value": "!isExpand; else elseTemplate"
+										"type": "CommonAttr"
 									}
 								],
 								"children": [
@@ -164,7 +164,7 @@
 								"tag": "ng-template",
 								"attrs": [
 									{
-										"name": "elseTemplate",
+										"name": "#elseTemplate",
 										"type": "CommonAttr"
 									}
 								],
@@ -182,9 +182,9 @@
 												"type": "CommonAttr"
 											},
 											{
+												"value": "iconHS-zhankai-copy",
 												"name": "iconfont",
-												"type": "CommonAttr",
-												"value": "iconHS-zhankai-copy"
+												"type": "CommonAttr"
 											}
 										],
 										"children": []

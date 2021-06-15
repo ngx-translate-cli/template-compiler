@@ -16,7 +16,9 @@ function generatorAttr(attrs) {
     if(!attrs || !attrs.length) {
         return '';
     }
-    const output = attrs.map(v => `${v.name}="${v.value}"`)
+    const output = attrs.map(v => {
+        return v.value ? `${v.name}="${v.value}"` : v.name;
+    })
     return output.join(' ')
 }
 
@@ -28,7 +30,7 @@ function generatorItem(node) {
         if(isCloseSelf(node.tag)) {
             return `<${node.tag} ${generatorAttr(node.attrs)} />`;
         }
-        return `<${node.tag} ${generatorAttr(node.attrs)} >` +
+        return `<${node.tag} ${generatorAttr(node.attrs)}>` +
                    generatorArrayEle(node) +
                 `</${node.tag}>`;
     }
