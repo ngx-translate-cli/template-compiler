@@ -5,6 +5,7 @@ import { TextParser } from './text-parser';
 import { isCloseSelf } from './utils';
 import { SourceWatch } from './source';
 import { Stack } from './stack';
+import { attrParser } from './attr-parser';
 
 export class HtmlParser {
     source: SourceWatch;
@@ -82,7 +83,7 @@ export class HtmlParser {
             const node = {
                 type: 'Element',
                 tag,
-                attr: attrString,
+                attrs: attrParser(attrString),
                 children: []
             }
             const last = this.stack.last();

@@ -1,4 +1,4 @@
-<nz-badge class="right15 btn-badge" (click)="onClick(item)" *ngFor="let item of btnList">
-    <button class="btn-wrap" [class.btn-selected]="item.selected">
-        {{ transforTitle(item) }}{{'a.v' | translate}}</button>
+<nz-badge class="right15 btn-badge" (click)="onClick(item)" [title]="'zh.json' | translate" *ngFor="let item of btnList" >
+<button class="btn-wrap" [class.btn-selected]="item.selected" >
+    {{ transforTitle(item) }}{{'a.v' | translate}}</button>
 </nz-badge>

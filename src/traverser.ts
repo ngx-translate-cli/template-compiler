@@ -13,10 +13,16 @@ function traverserNode(node, visitor) {
     switch(node.type) {
         case 'Element':
             traveserNodeArray(node.children, visitor);
+            if(node.attrs && node.attrs.length) {
+                traveserNodeArray(node.attrs, visitor);
+            }
             break;
-        case 'Text':
+        case 'CommonAttr':
+        case 'DynamicAttr':
+        case 'ActiveAttr':
         case 'Comment':
         case 'Context':
+        case 'Text':
             break;
         default:
             throw new Error(node.type);
@@ -25,5 +31,10 @@ function traverserNode(node, visitor) {
 }
 
 export function traverser(ast, visitor) {
-    traveserNodeArray(ast.children, visitor);
+    const body = ast[0];
+    if(body.type !== 'Body') {
+        throw new Error('ast errror!');
+    }
+
+    traveserNodeArray(body.children, visitor);
 }

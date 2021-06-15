@@ -6,7 +6,28 @@
 			{
 				"type": "Element",
 				"tag": "nz-badge",
-				"attr": "\nclass=\"right15 btn-badge\"\n(click)=\"onClick(item)\"\n*ngFor=\"let item of btnList\"\n",
+				"attrs": [
+					{
+						"name": "class",
+						"type": "CommonAttr",
+						"value": "right15 btn-badge"
+					},
+					{
+						"name": "(click)",
+						"type": "ActiveAttr",
+						"value": "onClick(item)"
+					},
+					{
+						"name": "[title]",
+						"type": "CommonAttr",
+						"value": "'zh.json' | translate"
+					},
+					{
+						"name": "*ngFor",
+						"type": "CommonAttr",
+						"value": "let item of btnList"
+					}
+				],
 				"children": [
 					{
 						"type": "Text",
@@ -15,7 +36,18 @@
 					{
 						"type": "Element",
 						"tag": "button",
-						"attr": " class=\"btn-wrap\" [class.btn-selected]=\"item.selected\"",
+						"attrs": [
+							{
+								"name": "class",
+								"type": "CommonAttr",
+								"value": "btn-wrap"
+							},
+							{
+								"name": "[class.btn-selected]",
+								"type": "DynamicAttr",
+								"value": "item.selected"
+							}
+						],
 						"children": [
 							{
 								"type": "Text",
