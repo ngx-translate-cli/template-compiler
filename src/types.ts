@@ -11,7 +11,13 @@ interface NodeType {
     parent: NodeType
 }
 
+interface sourceState {
+    peek: string;
+    tpl: string;
+}
+
 export type {
     Node,
-    NodeType
+    NodeType,
+    sourceState
 }

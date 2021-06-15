@@ -1,13 +1,15 @@
 import type { NodeType, Node } from './types'
-import { reg } from './reg';
+import * as sym from './symbols';
 import { TextParser } from './text-parser';
 
-import { isCloseSelf, Stack } from './utils';
+import { isCloseSelf } from './utils';
+import { SourceWatch } from './source';
+import { Stack } from './stack';
 
 export class HtmlParser {
-    source: string;
+    source: SourceWatch;
     constructor(source) {
-        this.source = source;
+        this.source = new SourceWatch(source);
     }
 
     stack = new Stack({
@@ -19,90 +21,91 @@ export class HtmlParser {
     lastNode = null;
 
     parse() {
-        let index = 0;
-        while(this.source) {
-            // comment node
-            if(this.source.indexOf(reg.commentStart) === 0) {
-                index = this.source.indexOf(reg.commentEnd);
-                if(index) {
-                    this.commentHandler({
-                        type: 'Comment',
-                        content: this.source.substring(4, index)
-                    })
+        while(this.source.tpl) {
+            if(this.source.startWith(sym.commentStart)) {
+                this.comment();
+            } else if(this.source.startWith(sym.tagEndReg)) {
+                this.endTag();
+            } else if(this.source.startWith(sym.tagStartReg)) {
+                this.startTag();
+            } else {
+                let text = '';
+                while(
+                    this.source.tpl &&
+                    !sym.tagStartReg.test(this.source.tpl) &&
+                    !sym.tagEndReg.test(this.source.tpl) &&
+                    !sym.commentReg.test(this.source.tpl)
+                ) {
+                    let index = 0;
+                    if(this.source.peek === sym.tagStart) {
+                        index = 1;
+                    } else {
+                        const _index = this.source.tpl.indexOf(sym.tagStart);
+                        index = _index < 0 ? this.source.tpl.length : _index; 
+                    }
+                    text += this.source.getStr(0, index);
                     this._advance(index);
                 }
-            }
-            // end tag.
-            else if(this.source.indexOf(reg.tagEnd) === 0) {
-                const match = this.source.match(reg.tagEndReg);
-                if(match) {
-                    this.endTagHandler(match);
-                    this._advance(match[0].length);
-                }
-            }
-            // start tag.
-            else if(this.source.indexOf(reg.tagStart) === 0) {
-                const match = this.source.match(reg.tagStartReg);
-                if(match) {
-                    this.startTagHandler(match);
-                    this._advance(match[0].length);
-                }
-            }
-            // text.
-            else {
-                const index = this.findTagIndex(this.source);
-                const text = this.source.slice(0, index);
                 this.textHandler(text);
-                this._advance(index);
             }
         }
         return this.stack.getStack();
     }
 
     private _advance(step) {
-        this.source = this.source.slice(step);
+        this.source.advance(step);
     }
 
-    private commentHandler(node: Node) {
-        var last = this.stack.last();
-        last.children.push(node);
+    private comment() {
+        let index = this.source.indexOf(sym.commentEnd);
+        if(index) {
+            const node = {
+                type: 'Comment',
+                content: this.source.getStr(4, index)
+            }
+            const last = this.stack.last();
+            last.children.push(node);
+            this._advance(index);
+        }
+
     }
 
-    private startTagHandler(match) {
-        const tag = match[1];
-        const attrString = match[2];
-        let isUnclose = false; // 是否需要关闭得标签
-        if(isCloseSelf(tag)) {
-            isUnclose = true;
-        }
-        const node = {
-            type: 'Element',
-            tag,
-            attr: attrString,
-            children: []
-        }
-        const last = this.stack.last();
-        isUnclose ? last.children.push(node) : this.stack.push(node);
-    }
-
-    private endTagHandler(match) {
-        const tag = match[1];
-        const last = this.stack.last();
-        if(last && last.tag !== tag) {
-            throw 'parser error' + this.source;
-        } else {
-            const child = this.stack.pop();
-            const prvLast = this.stack.last();
-            prvLast.children.push(child);
+    private startTag() {
+        const match = this.source.match(sym.tagStartReg);
+        if(match) {
+            const tag = match[1];
+            const attrString = match[2];
+            let isUnclose = false; // 是否需要关闭得标签
+            if(isCloseSelf(tag)) {
+                isUnclose = true;
+            }
+            const node = {
+                type: 'Element',
+                tag,
+                attr: attrString,
+                children: []
+            }
+            const last = this.stack.last();
+            isUnclose ? last.children.push(node) : this.stack.push(node);
+            this._advance(match[0].length);
         }
     }
 
-    private findTagIndex(source) {
-        let index = 0;
-        while(index < source.length && source.charAt(index) !== '<') {
-            index++;
+    private endTag() {
+        const match = this.source.match(sym.tagEndReg);
+        if(match) {
+            const tag = match[1];
+            const last = this.stack.last();
+            if(last && last.tag !== tag) {
+                throw 'parser error' + this.source;
+            } else {
+                const child = this.stack.pop();
+                const prvLast = this.stack.last();
+                prvLast.children.push(child);
+            }
+            this._advance(match[0].length);
         }
-        return index;
+
     }
 
     private textHandler(text: string) {

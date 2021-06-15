@@ -4,123 +4,26 @@
 		"parent": null,
 		"children": [
 			{
-				"type": "Text",
-				"content": "{{'a.v' | translate}}"
-			},
-			{
 				"type": "Element",
-				"tag": "section",
-				"attr": " class=\"btn-auto-list-wrap\"",
+				"tag": "nz-badge",
+				"attr": "\nclass=\"right15 btn-badge\"\n(click)=\"onClick(item)\"\n*ngFor=\"let item of btnList\"\n",
 				"children": [
 					{
 						"type": "Text",
-						"content": "{{'a.v' | translate}}"
+						"content": "\n"
 					},
 					{
 						"type": "Element",
-						"tag": "div",
-						"attr": " class=\"btn-list\" [class.btn-hide]=\"!isExpand\"",
+						"tag": "button",
+						"attr": " class=\"btn-wrap\" [class.btn-selected]=\"item.selected\"",
 						"children": [
 							{
 								"type": "Text",
-								"content": "{{'a.v' | translate}}"
-							},
-							{
-								"type": "Element",
-								"tag": "nz-badge",
-								"attr": "\n        class=\"right15 btn-badge\"\n        (click)=\"onClick(item)\"\n        *ngFor=\"let item of btnList\"\n    ",
-								"children": [
-									{
-										"type": "Text",
-										"content": "{{'a.v' | translate}}"
-									},
-									{
-										"type": "Element",
-										"tag": "button",
-										"attr": " class=\"btn-wrap\" [class.btn-selected]=\"item.selected\"",
-										"children": [
-											{
-												"type": "Text",
-												"content": "{{'a.v' | translate}}"
-											},
-											{
-												"type": "Context",
-												"name": " transforTitle(item) "
-											},
-											{
-												"type": "Text",
-												"content": "{{'a.v' | translate}}"
-											}
-										]
-									},
-									{
-										"type": "Text",
-										"content": "{{'a.v' | translate}}"
-									}
-								]
-							},
-							{
-								"type": "Text",
-								"content": "{{'a.v' | translate}}"
-							}
-						]
-					},
-					{
-						"type": "Text",
-						"content": "{{'a.v' | translate}}"
-					},
-					{
-						"type": "Element",
-						"tag": "div",
-						"attr": " class=\"btn-icon\" (click)=\"isExpandChange.emit(!isExpand)\"",
-						"children": [
-							{
-								"type": "Text",
-								"content": "{{'a.v' | translate}}"
-							},
-							{
-								"type": "Element",
-								"tag": "i",
-								"attr": "\n        nz-icon\n        iconfont=\"iconHS-zhankai\"\n        *ngIf=\"!isExpand; else elseTemplate\"\n    ",
-								"children": [
-									{
-										"type": "Text",
-										"content": "{{'a.v' | translate}}"
-									}
-								]
-							},
-							{
-								"type": "Text",
-								"content": "{{'a.v' | translate}}"
-							},
-							{
-								"type": "Element",
-								"tag": "ng-template",
-								"attr": " #elseTemplate",
-								"children": [
-									{
-										"type": "Text",
-										"content": "{{'a.v' | translate}}"
-									},
-									{
-										"type": "Element",
-										"tag": "i",
-										"attr": " nz-icon iconfont=\"iconHS-zhankai-copy\"",
-										"children": []
-									},
-									{
-										"type": "Text",
-										"content": "{{'a.v' | translate}}"
-									}
-								]
-							},
-							{
-								"type": "Text",
-								"content": "{{'a.v' | translate}}"
+								"content": "\n    "
 							},
 							{
 								"type": "Context",
-								"name": " isExpand ? \"收起\" : \"展开\" "
+								"name": " transforTitle(item) "
 							},
 							{
 								"type": "Text",
@@ -130,13 +33,9 @@
 					},
 					{
 						"type": "Text",
-						"content": "{{'a.v' | translate}}"
+						"content": "\n"
 					}
 				]
-			},
-			{
-				"type": "Text",
-				"content": "{{'a.v' | translate}}"
 			}
 		]
 	}

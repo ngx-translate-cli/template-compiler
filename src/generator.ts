@@ -1,3 +1,5 @@
+import { isCloseSelf } from "./utils";
+
 export function Generator(ast) {
     return generatorArray(ast[0]);
 }
@@ -15,6 +17,9 @@ function generatorItem(node) {
         return '<--' + node.content + '-->';
     }
     if(node.type === 'Element') {
+        if(isCloseSelf(node.tag)) {
+            return `<${node.tag}${node.attr} />`;
+        }
         return `<${node.tag}${node.attr}>` +
                 generatorArray(node) +
                 `</${node.tag}>`;
